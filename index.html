@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrepreneurship Notes — MLS</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181c27;
+    --card: #1e2333;
+    --border: #2a2f42;
+    --accent: #4f8ef7;
+    --accent2: #7c5cbf;
+    --gold: #e6b84a;
+    --text: #dde3f0;
+    --muted: #7c8aaa;
+    --heading: #f0f4ff;
+    --tag-bg: #252c42;
+    --sidebar-w: 280px;
+    --radius: 10px;
+    --font-main: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-main);
+    font-size: 15.5px;
+    line-height: 1.75;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  .sidebar-header {
+    padding: 22px 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-header h1 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3px;
+  }
+  .sidebar-header p {
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+
+  #search-box {
+    margin: 14px 14px 6px;
+    padding: 8px 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 13px;
+    width: calc(100% - 28px);
+    outline: none;
+  }
+  #search-box:focus { border-color: var(--accent); }
+  #search-box::placeholder { color: var(--muted); }
+
+  nav ul { list-style: none; padding: 8px 0 20px; }
+  nav ul li a {
+    display: block;
+    padding: 7px 20px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: all .15s;
+  }
+  nav ul li a:hover,
+  nav ul li a.active {
+    color: var(--text);
+    background: var(--tag-bg);
+    border-left-color: var(--accent);
+  }
+  nav ul li a.active { color: var(--accent); font-weight: 600; }
+
+  nav .section-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 14px 20px 4px;
+  }
+
+  /* ── MAIN ── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    padding: 48px 56px 80px;
+    max-width: 940px;
+  }
+
+  .page-hero {
+    margin-bottom: 50px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-hero .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 11.5px;
+    color: var(--accent);
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .page-hero h2 {
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--heading);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .page-hero p {
+    color: var(--muted);
+    font-size: 15px;
+    max-width: 600px;
+  }
+
+  /* ── SECTIONS ── */
+  .topic-section {
+    margin-bottom: 70px;
+    scroll-margin-top: 30px;
+  }
+
+  .topic-section h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--heading);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topic-section h2 .icon {
+    width: 32px; height: 32px;
+    background: var(--tag-bg);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .topic-section h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 28px 0 10px;
+  }
+
+  .topic-section h4 {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #a8b8e0;
+    margin: 18px 0 8px;
+  }
+
+  .topic-section p {
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  /* LISTS */
+  .topic-section ol, .topic-section ul {
+    margin: 8px 0 14px 20px;
+    color: var(--text);
+  }
+  .topic-section li {
+    margin-bottom: 6px;
+    padding-left: 4px;
+  }
+  .topic-section li strong {
+    color: var(--heading);
+  }
+
+  /* CARDS */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 14px 0 20px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+  .card h5 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 7px;
+  }
+  .card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+  /* CALLOUT BOXES */
+  .callout {
+    border-left: 4px solid var(--accent);
+    background: var(--card);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .callout.gold { border-left-color: var(--gold); }
+  .callout.purple { border-left-color: var(--accent2); }
+  .callout strong { color: var(--heading); }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  th {
+    background: var(--tag-bg);
+    color: var(--accent);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--tag-bg); }
+
+  /* THEORY BLOCK */
+  .theory-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+  .theory-block h5 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .theory-block p { font-size: 13.5px; margin: 0; }
+
+  /* SCROLL TO TOP */
+  #scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px; height: 40px;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    box-shadow: 0 4px 14px rgba(79,142,247,.35);
+  }
+  #scroll-top.visible { display: flex; }
+
+  /* PROGRESS BAR */
+  #progress {
+    position: fixed;
+    top: 0; left: var(--sidebar-w);
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 99;
+    width: 0;
+    transition: width .1s;
+  }
+
+  @media (max-width: 768px) {
+    :root { --sidebar-w: 0px; }
+    #sidebar { transform: translateX(-280px); width: 280px; transition: transform .3s; }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; padding: 24px 20px 60px; }
+    #progress { left: 0; }
+    .hamburger { display: flex !important; }
+  }
+
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 14px; left: 14px;
+    z-index: 300;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 38px; height: 38px;
+    align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<button class="hamburger" onclick="toggleSidebar()">☰</button>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <h1>📚 MLS Entrepreneurship</h1>
+    <p>School of Medicine · Comprehensive Notes</p>
+  </div>
+  <input id="search-box" type="text" placeholder="Search topics…" oninput="filterNav(this.value)">
+  <nav>
+    <ul id="nav-list">
+      <li class="section-label">Foundations</li>
+      <li><a href="#evolution">1. Evolution of Entrepreneurship</a></li>
+      <li><a href="#factors">2. Factors Affecting Development</a></li>
+      <li><a href="#myths">3. Myths About Entrepreneurship</a></li>
+      <li><a href="#theories">4. Theories of Entrepreneurship</a></li>
+      <li class="section-label">The Entrepreneur</li>
+      <li><a href="#types">5. Types of Entrepreneurs</a></li>
+      <li><a href="#traits">6. Traits of an Entrepreneur</a></li>
+      <li><a href="#culture">7. Entrepreneurial Culture</a></li>
+      <li><a href="#motivation">8. Entrepreneurial Motivation</a></li>
+      <li><a href="#maslow">9. Maslow's Hierarchy of Needs</a></li>
+      <li class="section-label">Starting a Business</li>
+      <li><a href="#opportunities">10. Business Opportunities</a></li>
+      <li><a href="#ideas">11. Generating Business Ideas</a></li>
+      <li><a href="#screening">12. Screening a Business Idea</a></li>
+      <li><a href="#incubation">13. Business Incubation</a></li>
+      <li><a href="#protection">14. Protecting Business Ideas</a></li>
+      <li class="section-label">Management Skills</li>
+      <li><a href="#creativity">15. Creativity & Innovation</a></li>
+      <li><a href="#leadership">16. Leadership</a></li>
+      <li><a href="#decision">17. Decision Making</a></li>
+      <li><a href="#time">18. Time Management</a></li>
+      <li><a href="#change">19. Managing Change</a></li>
+      <li><a href="#competition">20. Coping with Competition</a></li>
+      <li class="section-label">Business & Market</li>
+      <li><a href="#marketing">21. Marketing & the 4Ps</a></li>
+      <li><a href="#org">22. Organizational Forms</a></li>
+      <li><a href="#finance">23. Sources of Finance</a></li>
+      <li><a href="#business-plan">24. Business Plan</a></li>
+      <li class="section-label">Current Issues</li>
+      <li><a href="#ethics">25. Business Ethics</a></li>
+      <li><a href="#csr">26. Social Responsibility</a></li>
+      <li><a href="#technology">27. Technology & E-Business</a></li>
+      <li><a href="#globalization">28. Globalization</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+  <div class="page-hero">
+    <span class="tag">Department of Medical Laboratory Sciences</span>
+    <h2>Entrepreneurship — Complete Notes</h2>
+    <p>Comprehensive, clearly organized notes covering every topic. Use the sidebar to jump to any section, or scroll through from top to bottom.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 1. EVOLUTION -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="evolution">
+    <h2><span class="icon">🌱</span>1. Evolution of Entrepreneurship in Kenya</h2>
+
+    <p>Interest in entrepreneurship in Kenya gained momentum in the <strong>early 1960s–1970s</strong> as a potential solution to stagnating economic development and rising unemployment.</p>
+
+    <h3>The ILO Report — The Turning Point</h3>
+    <p>The <strong>International Labour Organization (ILO)</strong> report was the main catalyst. It highlighted the informal sector, showing that most of Kenya's urban workers were self-employed in small enterprises. The report proposed that developing this sector would:</p>
+    <ol type="i">
+      <li>Promote employment</li>
+      <li>Facilitate overall development</li>
+      <li>Achieve a more equitable distribution of resources</li>
+    </ol>
+
+    <h3>Government Response</h3>
+    <p>Based on the ILO report, the Kenyan government responded with a <strong>Sessional Paper in 1973</strong>, formally recognizing the role of entrepreneurship in employment creation — not just in the informal sector, but also in the formal sector. Subsequent development plans introduced strategies such as:</p>
+    <ol type="a">
+      <li>The <strong>Industrial Estate Programme</strong> — providing physical spaces for small businesses</li>
+      <li>Establishment of development agencies, e.g., <strong>ICDC</strong> (Industrial and Commercial Development Corporation) and <strong>KIE</strong> (Kenya Industrial Estates)</li>
+      <li>Policy and institutional frameworks to promote entrepreneurs</li>
+      <li>Promoting <strong>indigenous Kenyan enterprises</strong> — giving local businesses priority</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 2. FACTORS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="factors">
+    <h2><span class="icon">⚙️</span>2. Factors Affecting Entrepreneurial Development</h2>
+    <p>Four broad categories of factors influence whether entrepreneurship thrives or struggles.</p>
+
+    <h3>A. Political Factors</h3>
+    <p>The political environment shapes the rules under which businesses operate.</p>
+    <ol type="i">
+      <li><strong>Political stability</strong> — unstable politics create uncertainty that discourages investment</li>
+      <li><strong>Political system</strong> — whether capitalist (private ownership), socialist (government ownership), or mixed economy affects who can start businesses and how</li>
+      <li><strong>Government policies</strong> — monetary and fiscal policies, wage controls, nationalization policies, and tax laws all directly affect entrepreneurial activity</li>
+    </ol>
+
+    <h3>B. Economic Factors</h3>
+    <p>These affect people's purchasing power and the environment in which businesses operate.</p>
+    <ol type="i">
+      <li><strong>High taxation</strong> — reduces profits, making business less attractive; taxing raw materials raises production costs</li>
+      <li><strong>High cost of finance</strong> — high borrowing interest rates mean businesses struggle to repay loans and may collapse</li>
+      <li><strong>Inflation</strong> — rising prices without corresponding output growth erodes purchasing power</li>
+      <li><strong>Corruption and harassment</strong> — entrepreneurs are forced to bribe officials or face raids, increasing costs and uncertainty</li>
+      <li><strong>Unregulated competition</strong> — trade liberalization allows cheap imports that undercut local producers</li>
+      <li><strong>High energy costs</strong> — increase production costs significantly</li>
+      <li><strong>Declining personal incomes</strong> — reduces consumer demand for goods and services</li>
+    </ol>
+
+    <h3>C. Social and Cultural Factors</h3>
+    <p>Society shapes beliefs, values, and behaviors that either encourage or discourage entrepreneurship.</p>
+    <ol type="i">
+      <li><strong>Family</strong> — family support (or lack thereof) can make or break a business</li>
+      <li><strong>Religion</strong> — religious beliefs may prohibit certain types of businesses (e.g., alcohol, pork products)</li>
+      <li><strong>Social roles and status</strong> — culture may look down on business failure, discouraging risk-taking</li>
+      <li><strong>Reference groups</strong> — peers influence entrepreneurial aspirations</li>
+      <li><strong>Lack of entrepreneurial culture</strong> — where business ownership is not valued or celebrated</li>
+    </ol>
+
+    <h3>D. Technological Factors</h3>
+    <ol type="i">
+      <li><strong>Poor transport and communication networks</strong> — make business difficult and inconvenience customers</li>
+      <li><strong>Lack of necessary skills and knowledge</strong> — due to insufficient training opportunities and high education costs</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 3. MYTHS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="myths">
+    <h2><span class="icon">💡</span>3. Myths About Entrepreneurship</h2>
+    <p>Many misconceptions exist about entrepreneurs. Understanding why each is false is important.</p>
+
+    <div class="theory-block">
+      <h5>Myth 1: Entrepreneurs are doers, not thinkers</h5>
+      <p><strong>Reality:</strong> While entrepreneurs are action-oriented, they are also deep thinkers and strategic planners. Action without thought leads to failure.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 2: Entrepreneurs are born, not made</h5>
+      <p><strong>Reality:</strong> Entrepreneurial traits can be learned and developed. The rise of entrepreneurship as a formal discipline has helped dispel this myth.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 3: Entrepreneurs are always inventors</h5>
+      <p><strong>Reality:</strong> Entrepreneurship is broader than invention. It includes improving existing products, identifying new markets, and innovating in any area of business.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 4: Entrepreneurs are social and academic misfits</h5>
+      <p><strong>Reality:</strong> Some successful entrepreneurs dropped out of school, but today the entrepreneur is a celebrated social, economic, and academic figure — not a misfit.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 5: All you need is money</h5>
+      <p><strong>Reality:</strong> Most businesses fail not from lack of money, but from poor management, poor planning, and lack of financial understanding. Money is a resource, not an end in itself.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 6: Entrepreneurs are extremely lucky</h5>
+      <p><strong>Reality:</strong> "Luck is preparation meeting opportunity." Successful entrepreneurs appear lucky because they are better prepared to recognize and seize opportunities.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 7: Entrepreneurs must fail before they succeed</h5>
+      <p><strong>Reality:</strong> Failure is not mandatory, though it can be instructive. Many entrepreneurs succeed on their first venture.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 8: Entrepreneurs are extreme risk-takers (gamblers)</h5>
+      <p><strong>Reality:</strong> Entrepreneurs take <em>calculated, moderate risks</em> — they analyze situations before acting. They are not gamblers who act without information.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 9: You need a lot of money to start a business</h5>
+      <p><strong>Reality:</strong> Entrepreneurship is about using limited resources creatively and efficiently. Many successful businesses started with very little capital.</p>
+    </div>
+    <div class="theory-block">
+      <h5>Myth 10: Banks don't lend to start-ups</h5>
+      <p><strong>Reality:</strong> Banks and institutions do lend to start-ups — especially those with solid business plans and viable business ideas.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 4. THEORIES -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="theories">
+    <h2><span class="icon">🔬</span>4. Theories of Entrepreneurship</h2>
+    <p>Several theories explain why and how people become entrepreneurs. Each looks at entrepreneurship from a different angle.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h5>Psychological Theory</h5>
+        <p>Entrepreneurs have unique values, attitudes, and needs. Key traits: need for achievement, locus of control, and risk-taking propensity.</p>
+      </div>
+      <div class="card">
+        <h5>Motivational Theory</h5>
+        <p>Factors that energize a person to start and sustain a business — both internal drives (desire, ambition) and external drives (infrastructure, credit, tax policy).</p>
+      </div>
+      <div class="card">
+        <h5>Sociological Theory</h5>
+        <p>Entrepreneurship is shaped by social structures, networks, and community norms — who you know and what society values influences who starts businesses.</p>
+      </div>
+      <div class="card">
+        <h5>Economic Theory</h5>
+        <p>Entrepreneurs respond to economic signals — profit opportunities, market gaps, and resource availability drive entrepreneurial behavior.</p>
+      </div>
+      <div class="card">
+        <h5>Resource-Based Theory</h5>
+        <p>Firms gain competitive advantage through unique, valuable, and hard-to-copy resources — entrepreneurs build businesses around their resource advantages.</p>
+      </div>
+      <div class="card">
+        <h5>Competence-Based Theory</h5>
+        <p>Focuses on the unique skills, knowledge, and capabilities of the entrepreneur as the basis for business success.</p>
+      </div>
+      <div class="card">
+        <h5>Heterogeneous Demand Theory</h5>
+        <p>Consumers have varied, diverse needs — entrepreneurs profit by finding and filling niche demands that larger firms overlook.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 5. TYPES -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="types">
+    <h2><span class="icon">👥</span>5. Types of Entrepreneurs</h2>
+
+    <h3>Main Types</h3>
+    <ol type="a">
+      <li><strong>Craft Entrepreneur</strong> — Uses personal technical or professional skills to start a business. Does not aim to grow or expand. The skill is the product (e.g., a carpenter, tailor, or electrician working independently).</li>
+      <li><strong>Opportunistic Entrepreneur</strong> — Spots opportunities and builds a business to grow and expand. May not have specific technical skills but has vision, delegation ability, and management talent.</li>
+      <li><strong>Social Entrepreneur</strong> — Recognizes a social problem and uses entrepreneurial principles to solve it. The goal is social change, not purely profit (e.g., organizations addressing poverty, education gaps).</li>
+      <li><strong>Political Entrepreneur</strong> — Uses political systems and connections to promote and profit from commercial ventures. Seeks both political/social benefits and commercial gains.</li>
+      <li><strong>High-Tech Entrepreneur</strong> — Exploits new technological developments. Requires specific technical expertise to capitalize on innovation.</li>
+    </ol>
+
+    <h3>Other Specific Types</h3>
+    <ol type="i">
+      <li><strong>Concept Multiplier</strong> — Identifies a successful concept and duplicates it (e.g., franchise models)</li>
+      <li><strong>Acquirer</strong> — Takes over businesses started by others and improves them using their own ideas</li>
+      <li><strong>Buy/Sell Artist</strong> — Buys a company, improves it, then sells it for profit</li>
+      <li><strong>Economy of Scale Exploiter</strong> — Benefits from large sales volumes through discounts and low overhead costs</li>
+      <li><strong>Inventor</strong> — Creates a new product and builds a company around it</li>
+      <li><strong>Self-employed</strong> — Performs all work themselves and keeps all profits</li>
+      <li><strong>Speculator</strong> — Buys assets cheaply, anticipates price increases, sells at a profit</li>
+      <li><strong>Conglomerate</strong> — Builds a portfolio of small businesses, sometimes using assets of one to acquire another</li>
+      <li><strong>Matriarch/Patriarch</strong> — Heads a family-owned business that employs multiple family members</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 6. TRAITS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="traits">
+    <h2><span class="icon">🏆</span>6. Traits and Characteristics of a Potential Entrepreneur</h2>
+    <p>Successful entrepreneurs consistently demonstrate the following qualities:</p>
+
+    <ol type="I">
+      <li><strong>Initiative and Risk-Taking</strong> — Acts before being forced to. Extends business into new areas. Sees opportunities and moves on them without waiting for permission.</li>
+      <li><strong>Persistence and Patience</strong> — Does not give up when faced with obstacles. Takes repeated action to overcome challenges, even significant ones.</li>
+      <li><strong>Information-Seeking</strong> — Actively researches to reach objectives. Consults experts, conducts market analysis, asks questions, and validates ideas.</li>
+      <li><strong>Concern for Quality</strong> — Sets and meets high standards. Compares own work favorably to others and strives to produce top-quality goods or services.</li>
+      <li><strong>Commitment</strong> — Prioritizes completing what was promised. Accepts full responsibility when problems arise. Places customer satisfaction at the top of the agenda.</li>
+      <li><strong>Efficiency Orientation</strong> — Finds faster and cheaper ways of doing things. Focuses on cost improvement and uses information to improve performance.</li>
+      <li><strong>Systematic Planning</strong> — Breaks tasks into sub-tasks. Anticipates obstacles. Takes a logical, step-by-step approach. Evaluates alternatives before deciding.</li>
+      <li><strong>Self-Confidence</strong> — Believes strongly in their own abilities. Sticks with their judgment even when others oppose them. Confronts problems directly.</li>
+      <li><strong>Persuasion</strong> — Convinces others to buy products, provide funds, or support the business. Asserts competence and reliability.</li>
+      <li><strong>Networking</strong> — Develops business contacts. Uses influential people to accomplish objectives and open doors.</li>
+    </ol>
+
+    <h3>Factors to Consider When Starting a Business</h3>
+    <ol type="A">
+      <li><strong>Personal Factors:</strong> Your abilities, interests/hobbies, family situation, and health — all affect your capacity to run a business successfully</li>
+      <li><strong>Resource Factors:</strong> Financial resources, labor availability, equipment/machinery, and raw materials</li>
+      <li><strong>Environmental Factors:</strong> Location, government policies, infrastructure, economic conditions of the community, competition, and cultural customs</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 7. CULTURE -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="culture">
+    <h2><span class="icon">🌍</span>7. Entrepreneurial Culture</h2>
+
+    <div class="callout">
+      <strong>Definition:</strong> Entrepreneurial culture is the way a society embraces finding new opportunities in business and gathering resources to fill them — it's a collective mindset that values and supports business creation.
+    </div>
+
+    <h3>How a Country Develops an Entrepreneurial Culture</h3>
+    <ol type="i">
+      <li>Integrating entrepreneurship training into the overall education system — especially reaching youth early</li>
+      <li>Exposing potential entrepreneurs to real business practices through networks and role models</li>
+      <li>Creating a conducive environment where new businesses can emerge and flourish</li>
+      <li>Building on strong local values and systems rather than importing foreign models</li>
+    </ol>
+
+    <h3>Importance of Entrepreneurial Culture</h3>
+    <ol type="i">
+      <li>Enhances economic growth and builds social capital</li>
+      <li>Creates jobs</li>
+      <li>Acts as the primary source of innovation in an economy</li>
+      <li>Helps decentralize government power (devolution) for policy implementation</li>
+      <li>Directly drives development in technology and human capital formation</li>
+    </ol>
+
+    <h3>Cultural Habits That PROMOTE Entrepreneurship</h3>
+    <ol type="a">
+      <li><strong>Money orientation</strong> — knowing the value of money and using it as motivation</li>
+      <li><strong>Future orientation</strong> — ability to visualize upcoming changes that create opportunity</li>
+      <li><strong>Time consciousness</strong> — knowing the right time to start a venture and using time well</li>
+      <li><strong>Trust and honesty</strong> — earning consumer trust by delivering what is promised</li>
+      <li><strong>Hard work</strong> — willingness to work hard distinguishes successful from unsuccessful people</li>
+    </ol>
+
+    <h3>Cultural Factors That INHIBIT Entrepreneurship</h3>
+    <ol type="a">
+      <li><strong>Religion</strong> — may prohibit investment in certain businesses (nightclubs, alcohol)</li>
+      <li><strong>Language barriers</strong> — hinder business in areas where communication is difficult</li>
+      <li><strong>Personal relationships</strong> — family obligations may prevent full commitment to business</li>
+      <li><strong>Negative attitudes toward innovation</strong> — cultures that resist change slow entrepreneurial growth</li>
+      <li><strong>Poor networking</strong> — limited ability to meet people restricts access to new opportunities</li>
+      <li><strong>Lack of technical skills</strong> — inability to use technology slows growth and competitiveness</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 8. MOTIVATION -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="motivation">
+    <h2><span class="icon">🔥</span>8. Entrepreneurial Motivation</h2>
+    <p>Motivation is what causes a person to behave in a certain way — the <em>why</em> behind action. Entrepreneurial motivation includes all forces that energize an individual to start and sustain a business.</p>
+
+    <h3>A. Internal Motivations (from within the person)</h3>
+    <ol type="i">
+      <li><strong>Employment Creation Need</strong> — desire to create a job for oneself when employment is unavailable</li>
+      <li><strong>Need for Independence / Self-Reliance</strong> — wanting to be your own boss, control your own destiny, and make your own decisions (internal locus of control)</li>
+      <li><strong>Need for Power</strong> — desire to exercise influence and control over others and situations</li>
+      <li><strong>Need for Recognition</strong> — aspiring to be acknowledged by peers, family, and society for achievements</li>
+      <li><strong>Need for Security</strong> — desire to be free from anxiety about survival and the future; wage employment may not provide adequate security</li>
+      <li><strong>Self-Actualization</strong> — the need to accomplish everything you are capable of; being unique and reaching your full potential — difficult to achieve through formal employment</li>
+    </ol>
+
+    <h3>B. External Motivations (provided by the environment)</h3>
+    <ol type="i">
+      <li><strong>Infrastructure</strong> — availability of power, water, electricity, communication, and road access</li>
+      <li><strong>Credit Facilities</strong> — access to loans from government agencies, banks, NGOs, and other financial institutions</li>
+      <li><strong>Information Support</strong> — easily accessible market information and research that helps entrepreneurs understand demand</li>
+      <li><strong>Pricing Policy</strong> — government pricing policies that make industries attractive for new entrants</li>
+      <li><strong>Tax Policy</strong> — favorable taxes that encourage entrepreneurial activity rather than discourage it</li>
+      <li><strong>Legal Controls</strong> — minimized bureaucracy and simple licensing requirements</li>
+      <li><strong>Political Climate</strong> — stable, non-discriminatory, and law-abiding political environment</li>
+      <li><strong>Technical and Technology Assistance</strong> — advice on production and feasibility studies</li>
+      <li><strong>Training and Consultancy</strong> — government-sponsored training programs (e.g., KIBT — Kenya Institute of Business Training)</li>
+      <li><strong>Friends and Role Models</strong> — encouragement and inspiration from people around you</li>
+    </ol>
+
+    <h3>What Demotivates People from Entrepreneurship?</h3>
+    <ol type="i">
+      <li>Lack of proper information</li>
+      <li>Fear of competition</li>
+      <li>Fear of taking risks</li>
+      <li>Inhibiting government laws and bureaucracy</li>
+      <li>Lack of adequate start-up capital</li>
+      <li>Lack of knowledge and skills</li>
+      <li>Wrong attitudes toward employment (preferring job security over self-employment)</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 9. MASLOW -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="maslow">
+    <h2><span class="icon">📊</span>9. Maslow's Hierarchy of Needs & Entrepreneurship</h2>
+    <p>Abraham Maslow's theory explains human motivation through a hierarchy of needs. It is directly relevant to understanding why people choose entrepreneurship.</p>
+
+    <div class="callout gold">
+      <strong>Three Core Assumptions:</strong> (i) Humans are never fully satisfied; (ii) A satisfied need no longer motivates behavior; (iii) Needs are arranged in a hierarchy of importance.
+    </div>
+
+    <h3>The Five Levels (and their link to entrepreneurship)</h3>
+    <ol type="1">
+      <li>
+        <strong>Physiological Needs</strong> — Food, clothing, shelter. These are survival needs. If wage employment cannot meet these basics, entrepreneurship becomes attractive as an alternative income source.
+      </li>
+      <li>
+        <strong>Safety / Security Needs</strong> — Freedom from danger, job security, and financial protection. Entrepreneurs save money (for illness), buy insurance, and work hard because their security depends entirely on their own effort.
+      </li>
+      <li>
+        <strong>Belonging / Social Needs</strong> — Need to be accepted by family, peers, and professional groups. Business networks, trade associations, and mentors fulfill this need for entrepreneurs.
+      </li>
+      <li>
+        <strong>Esteem Needs</strong> — Desire for power, prestige, status, and self-confidence. Owning a successful business earns recognition and social status that employment may not provide.
+      </li>
+      <li>
+        <strong>Self-Actualization</strong> — Making the most of your potential; being the best you can be. Entrepreneurship offers the freedom and challenge to fully develop one's capabilities — something formal employment rarely allows.
+      </li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 10. OPPORTUNITIES -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="opportunities">
+    <h2><span class="icon">🎯</span>10. Business Opportunities</h2>
+
+    <div class="callout">
+      <strong>Definition:</strong> A business opportunity is an attractive project idea that an entrepreneur accepts for investment based on what is known about the likelihood of its success.
+    </div>
+
+    <p>A real business opportunity is distinguished from a mere possibility by two key ingredients:</p>
+    <ol type="i">
+      <li>A good market scope (actual demand exists)</li>
+      <li>An attractive return on investment (the business will be profitable)</li>
+    </ol>
+
+    <h3>Qualities of a Good Business Opportunity</h3>
+    <ol type="a">
+      <li><strong>Demand</strong> — there must be a good, sustainable market for the product or service</li>
+      <li><strong>Profitability</strong> — the business must generate sufficient profit to be worthwhile</li>
+      <li><strong>Raw material availability</strong> — inputs must be accessible, reliable, and affordably priced</li>
+      <li><strong>Skilled labor</strong> — people with the right expertise must be available</li>
+    </ol>
+
+    <h3>Pre-Feasibility Study (What to Evaluate)</h3>
+    <p>Before committing resources, a pre-feasibility study helps confirm whether the opportunity is viable. It examines:</p>
+    <ol type="i">
+      <li>Market potential — Is there sufficient demand?</li>
+      <li>Technical requirements — Can the product actually be made?</li>
+      <li>Managerial ability — Does the team have the skills to run this business?</li>
+      <li>Financial projections — Will revenues exceed costs?</li>
+      <li>Risk evaluation — What could go wrong and how likely is it?</li>
+      <li>Business environment — Are political, legal, and economic conditions favorable?</li>
+    </ol>
+
+    <h3>Procedures for Starting a Business</h3>
+    <ol type="1">
+      <li>Identification of a business idea</li>
+      <li>Development of a business plan</li>
+      <li>Evaluation of location and market demand</li>
+      <li>Registration of the business</li>
+      <li>Choice of business organization structure</li>
+      <li>Obtaining a business name, trading licenses, and permits</li>
+      <li>Start-up and management of the business</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 11. IDEAS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="ideas">
+    <h2><span class="icon">💡</span>11. Generating Business Ideas</h2>
+    <p>Business ideas don't just appear — they come from deliberate effort to observe, listen, and think creatively.</p>
+
+    <h3>Methods of Generating Business Ideas</h3>
+    <ol type="1">
+      <li><strong>Identifying a Need</strong> — Maslow's hierarchy shows that every unmet need is a potential business idea. Find what people lack and provide it.</li>
+      <li><strong>Brainstorming</strong> — A group process where ideas flow freely without immediate criticism. Even silly ideas are welcome — they can spark better ones.</li>
+      <li><strong>Building on Skills, Hobbies, or Interests</strong> — Your passion or talent can become a business. Personal interest sustains motivation through the hard times.</li>
+      <li><strong>Spotting a Market Niche</strong> — Look for underserved market segments — groups of customers whose needs are not currently being met.</li>
+      <li><strong>Listening to What People Say</strong> — Pay attention when people express frustrations or wishes. "If only there was a service that…" is a business idea waiting to happen.</li>
+      <li><strong>Attribute Listening</strong> — Change how you look at something to find a new use for it. What else could this product or service do?</li>
+      <li><strong>Gaining from Waste</strong> — What appears to be waste can be recycled or repurposed into a new opportunity (e.g., recycling businesses).</li>
+      <li><strong>Research</strong> — Market surveys, reading trade publications, and analyzing industry reports generate solid ideas backed by data.</li>
+      <li><strong>Importing an Idea</strong> — Identify a business model that works well elsewhere and adapt it to your local context.</li>
+      <li><strong>Spin-off from Employment</strong> — Many entrepreneurs get their best ideas from working in an industry — they identify gaps and decide to fill them themselves.</li>
+    </ol>
+
+    <h3>Sources of New Business Ideas</h3>
+    <ol type="a">
+      <li><strong>Consumers</strong> — Allow customers to express opinions; their feedback reveals gaps</li>
+      <li><strong>Existing products and services</strong> — Monitoring competitors for improvement opportunities</li>
+      <li><strong>Distribution channels</strong> — Channel members know what consumers need and what's missing</li>
+      <li><strong>Government</strong> — Patent offices, government publications, exhibitions, and regulatory bodies</li>
+      <li><strong>Research and Development</strong> — The largest formal source of new business ideas</li>
+      <li><strong>Education</strong> — Academic training and vocational programs reveal opportunities in chosen fields</li>
+      <li><strong>Personal hobbies and contacts</strong> — Especially relevant for craft entrepreneurs</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 12. SCREENING -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="screening">
+    <h2><span class="icon">🔍</span>12. Screening a Business Idea</h2>
+    <p>After generating ideas, systematic evaluation is needed to choose the best one. This must be done <em>carefully, objectively, and without emotion</em>.</p>
+
+    <h3>The SWOT Analysis</h3>
+    <p>The SWOT framework helps evaluate a business idea against real-world conditions:</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Factor</th><th>Meaning</th><th>Examples</th></tr>
+        <tr><td><strong>Strengths</strong> (Internal)</td><td>What you do well</td><td>Adequate finance, good innovation ability, proven management, distinctive competence</td></tr>
+        <tr><td><strong>Weaknesses</strong> (Internal)</td><td>Where you fall short</td><td>Lack of key skills, poor track record, low morale, internal problems</td></tr>
+        <tr><td><strong>Opportunities</strong> (External)</td><td>Favorable external conditions</td><td>Potential customers, favorable social environment, available market gaps</td></tr>
+        <tr><td><strong>Threats</strong> (External)</td><td>Risks from outside</td><td>Strong competitors, adverse government policies, political instability, unfavorable legislation</td></tr>
+      </table>
+    </div>
+
+    <h3>Characteristics of a Good Business Idea</h3>
+    <ol type="i">
+      <li>Easy to manage and involves minimal risk</li>
+      <li>Does not require excessive capital investment</li>
+      <li>Offers a good return on capital</li>
+      <li>Has scope for growth, expansion, and diversification</li>
+      <li>Compatible with the owner's goals and interests</li>
+      <li>Not against the expectations of society</li>
+      <li>Has a short gestation period (quick to start producing results)</li>
+      <li>Has a readily available market</li>
+      <li>Easy to exit when necessary</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 13. INCUBATION -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="incubation">
+    <h2><span class="icon">🐣</span>13. Business Incubation</h2>
+
+    <div class="callout">
+      <strong>Definition:</strong> Business incubation is the process of nurturing small and start-up businesses to relative maturity — helping them become self-sustaining, healthy, and wealth-generating enterprises.
+    </div>
+
+    <div class="callout gold">
+      <strong>Key Statistic:</strong> The global failure rate for start-up businesses is <em>90%</em>. The success rate for incubated businesses is over <em>80%</em>. Incubation dramatically improves survival odds.
+    </div>
+
+    <h3>Why Businesses Fail (and why incubation helps)</h3>
+    <ol type="i">
+      <li>Insufficient capital for start-up</li>
+      <li>Insufficient knowledge of business and industry</li>
+      <li>Lack of entrepreneurial and business skills</li>
+      <li>Lack of managerial skills</li>
+      <li>Inadequate training</li>
+      <li>Lack of credit facilities</li>
+      <li>Lack of markets</li>
+      <li>Insufficient knowledge of markets</li>
+      <li>Inadequate infrastructure</li>
+      <li>Non-empowering political environment</li>
+    </ol>
+
+    <h3>Benefits of Business Incubation</h3>
+    <ol type="a">
+      <li>Creates jobs and wealth</li>
+      <li>Fosters an entrepreneurial climate in the community</li>
+      <li>Facilitates technology commercialization</li>
+      <li>Diversifies local economic resources</li>
+      <li>Accelerates local development</li>
+      <li>Encourages entrepreneurship, especially for women</li>
+      <li>Increases private sector investment and tax revenue</li>
+    </ol>
+
+    <h3>Government's Role in Incubation</h3>
+    <ol type="i">
+      <li>Creating an enabling environment</li>
+      <li>Financially supporting incubation programs</li>
+      <li>Providing loans and grants to small businesses</li>
+      <li>Lobbying Kenyans in the diaspora and development partners for support</li>
+      <li>Rallying universities and research institutions behind the concept</li>
+      <li>Using media initiatives to promote awareness</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 14. PROTECTION -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="protection">
+    <h2><span class="icon">🔒</span>14. Protecting Business Ideas</h2>
+    <p>Once a business idea is developed — especially unique designs or production methods — it must be protected from theft and unauthorized use.</p>
+
+    <h3>Methods of Protection</h3>
+    <ol type="a">
+      <li>
+        <strong>Patent</strong> — A grant of property right by the government to an inventor. Issued by the Commissioner of Patent Rights. Covers new, useful inventions (processes, machines, compositions of matter). Patents can be sold, transferred, or used as collateral. Protection lasts a set number of years.
+      </li>
+      <li>
+        <strong>Trademark</strong> — Any word, name, symbol, or device used to identify and distinguish goods/services from those of competitors (e.g., KCA). Must be used commercially to be valid.
+      </li>
+      <li>
+        <strong>Service Mark</strong> — Similar to a trademark but used for services rather than physical goods. A name, wording, or symbol that creates a distinctive service concept.
+      </li>
+      <li>
+        <strong>Copyright</strong> — Protects intellectual property (creative works). Duration: life of the creator plus 50 additional years. Extends to authors, composers, and artists.
+      </li>
+      <li>
+        <strong>Trade Secret</strong> — Proprietary business information kept confidential to maintain a competitive advantage. Includes formulas, customer lists, chemical compounds, manufacturing processes, and compiled data. Protected through <em>non-disclosure agreements (NDAs)</em> signed by employees.
+      </li>
+      <li>
+        <strong>Licensing</strong> — An agreement where one party (with proprietary rights) allows another party to use their patent, trademark, or copyright in exchange for royalties. A useful strategy when a business lacks resources to enter a new market directly.
+      </li>
+    </ol>
+
+    <div class="callout purple">
+      <strong>Product Safety:</strong> Any product sold must comply with the Kenya Bureau of Standards (KBS) under the Consumer Protection Act. Products considered unsafe can be barred from sale.
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 15. CREATIVITY -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="creativity">
+    <h2><span class="icon">✨</span>15. Creativity and Innovation</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h5>Creativity</h5>
+        <p>Devising a <em>new</em> idea or thing that results in improved efficiency or effectiveness. It's about generating the concept.</p>
+      </div>
+      <div class="card">
+        <h5>Innovation</h5>
+        <p>Improving an existing idea or commercializing a concept. Turns ideas into <em>tangible, value-creating</em> realities.</p>
+      </div>
+      <div class="card">
+        <h5>Creative Destruction</h5>
+        <p>When innovations make old arrangements obsolete and free up resources for more efficient uses — e.g., computerization replacing manual processes.</p>
+      </div>
+    </div>
+
+    <h3>Reasons People OPPOSE Innovation</h3>
+    <ol type="i">
+      <li>Fear of unforeseen side effects (e.g., unexpected side effects of a new drug)</li>
+      <li>Fear of losing profits if the innovation fails to meet expectations</li>
+      <li>Fear of losing monopoly position and authority</li>
+      <li>Fear of disrupting consumer moral and social values</li>
+      <li>Desire to preserve existing market confidence</li>
+      <li>Fear of opening loopholes for competitors</li>
+    </ol>
+
+    <h3>Reasons FOR Innovation</h3>
+    <ol type="i">
+      <li>Solves inefficiency problems</li>
+      <li>Reduces costs and improves market position</li>
+      <li>Improves profit through newer technology</li>
+      <li>Enables competition with established businesses</li>
+      <li>Opens new local and international markets</li>
+      <li>Facilitates product diversification, spreading risk</li>
+      <li>Protects and sustains a monopoly or competitive advantage</li>
+    </ol>
+
+    <h3>Requirements for Innovation to Happen</h3>
+    <ol type="i">
+      <li><strong>Economic demand</strong> — belief that returns will exceed costs</li>
+      <li><strong>Surplus capital</strong> — funds available for start-up and experimentation</li>
+      <li><strong>Mobile and stable capital</strong> — capital must be able to move to potential innovators</li>
+      <li><strong>Growth-fostering institutions</strong> — banks, universities, and legal frameworks that support innovation</li>
+      <li><strong>Willingness to think creatively</strong> — the right philosophical and entrepreneurial mindset</li>
+      <li><strong>Favorable social norms</strong> — societies that punish creative thinking will not innovate</li>
+      <li><strong>Firm size advantages</strong> — large firms can afford innovation; they also attract talented employees</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 16. LEADERSHIP -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="leadership">
+    <h2><span class="icon">👑</span>16. Leadership</h2>
+
+    <div class="callout">
+      <strong>Definition:</strong> Leadership is the ability to inspire, influence, and persuade others to give maximum effort and cooperation <em>willingly and voluntarily</em> toward shared goals.
+    </div>
+
+    <h3>Leadership Behaviors</h3>
+    <ol type="a">
+      <li><strong>Vision and foresight</strong> — looking ahead when planning and guiding the business</li>
+      <li><strong>Desire to influence</strong> — gaining trust and confidence of staff</li>
+      <li><strong>Learning from experience</strong> — improving by reflecting on past mistakes</li>
+      <li><strong>High ambition</strong> — always aiming high in expectations and outcomes</li>
+      <li><strong>Imagination and creativity</strong> — seeing beyond the obvious and trying new approaches</li>
+      <li><strong>Initiative</strong> — getting things started and being an agent of change</li>
+      <li><strong>Good human relations</strong> — treating people well and projecting a positive business image</li>
+    </ol>
+
+    <h3>How to Motivate Employees</h3>
+    <ol type="1">
+      <li>Build workers' self-esteem — praise good work and show appreciation</li>
+      <li>Keep employees informed of what you are trying to accomplish</li>
+      <li>Delegate authority and responsibility — free yourself for important decisions</li>
+      <li>Maintain personal contact — know your staff well</li>
+      <li>Apply reinforcement — reward desirable behavior; do not reward undesirable behavior</li>
+      <li>Be an active listener — make employees feel heard and valued</li>
+      <li>Set specific, measurable goals and review them regularly</li>
+      <li>Address performance issues privately — never criticize publicly</li>
+    </ol>
+
+    <h3>Leadership Styles</h3>
+    <ol type="A">
+      <li><strong>Autocratic Style</strong> — Firm discipline; clear boundaries on what can and cannot be done. Gives employees a sense of security and clear expectations. The oldest style of leadership.</li>
+      <li><strong>Laissez-Faire (Free-Reign) Style</strong> — Very permissive; employees are left to reach their own potential. Works well with self-motivated individuals; can be abused by others.</li>
+      <li><strong>Democratic Style</strong> — Builds common interest among workers. Manager and team collaborate; even discipline lines are agreed upon. Often the most effective for complex organizations.</li>
+    </ol>
+
+    <h3>Theory X vs Theory Y (McGregor)</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Theory X (Negative View)</th><th>Theory Y (Positive View)</th></tr>
+        <tr><td>Workers are lazy and need to be pushed</td><td>Workers are naturally active and strive for achievement</td></tr>
+        <tr><td>Work only for fear of hunger or job loss</td><td>Work to achieve goals and find satisfaction</td></tr>
+        <tr><td>Must be closely supervised</td><td>Capable of self-direction and self-correction</td></tr>
+        <tr><td>Irresponsible and immature</td><td>Mature and responsible</td></tr>
+        <tr><td>Resist change; need routine</td><td>Inventive, adaptive, and creative</td></tr>
+        <tr><td>Satisfied with just good pay</td><td>Seeks broader meaning in work</td></tr>
+      </table>
+    </div>
+
+    <h3>Sources of Leadership Influence</h3>
+    <ol type="i">
+      <li><strong>Legitimate authority</strong> — power that comes with an official position or title</li>
+      <li><strong>Economic power</strong> — ability to give or withhold economic rewards</li>
+      <li><strong>Coercive power</strong> — ability to use force or threats to compel compliance</li>
+      <li><strong>Persuasion</strong> — using logic, charm, and evidence to convince others</li>
+      <li><strong>Referent power</strong> — influence based on charisma, reputation, or personal character (e.g., a respected doctor or mentor)</li>
+      <li><strong>Expert power</strong> — influence derived from specialized knowledge or skills</li>
+    </ol>
+
+    <h3>Leadership Theories</h3>
+    <ol type="a">
+      <li><strong>Trait Theory</strong> — Leaders are born with certain inherited characteristics (assertiveness, focus, need for achievement)</li>
+      <li><strong>Situational Theory</strong> — Leadership depends on the context; the right person for the right situation emerges as the leader</li>
+      <li><strong>Behavioral Theory</strong> — Leadership is about what leaders <em>do</em>, not who they are; behaviors can be learned</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 17. DECISION MAKING -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="decision">
+    <h2><span class="icon">⚖️</span>17. Decision Making</h2>
+
+    <div class="callout">
+      <strong>Definition:</strong> Decision making is the process of choosing from among various alternatives — selecting the best course of action to solve a problem.
+    </div>
+
+    <h3>Categories of Business Problems</h3>
+    <ol type="i">
+      <li><strong>Resource inadequacy</strong> — shortage of raw materials, skilled labor, or capital</li>
+      <li><strong>Organizational problems</strong> — poor delegation of duties, unclear rules, or management gaps</li>
+      <li><strong>Environmental problems</strong> — poor location, unsafe working conditions, external challenges</li>
+    </ol>
+
+    <h3>Steps in the Decision-Making Process</h3>
+    <ol type="1">
+      <li>Identify the major problem (e.g., low productivity)</li>
+      <li>Determine the root causes (e.g., low salaries, poor working conditions)</li>
+      <li>Generate potential solutions</li>
+      <li>Evaluate each potential solution — weighing advantages and disadvantages</li>
+      <li>Select the best solution based on the analysis</li>
+      <li>Implement the chosen solution</li>
+      <li>Verify whether the solution actually solved the problem</li>
+    </ol>
+
+    <h3>Methods of Decision Making</h3>
+    <ol type="a">
+      <li><strong>Rule of Thumb</strong> — based on existing laws, customs, or established procedures</li>
+      <li><strong>Committee / Teamwork Approach</strong> — a selected group makes a decision that is accepted by all</li>
+      <li><strong>Critical Path Analysis</strong> — stage-by-stage decision making to reach the final decision</li>
+      <li><strong>Brainstorming</strong> — all members generate ideas for solutions without initial judgment</li>
+    </ol>
+
+    <h3>Advantages and Disadvantages of Group Decision Making</h3>
+    <h4>Advantages</h4>
+    <ol type="i">
+      <li>Combined group knowledge is greater than any individual's</li>
+      <li>Groups develop a wider range of alternatives</li>
+      <li>Participation increases buy-in and acceptance of the decision</li>
+      <li>Group members better understand the reasoning behind decisions</li>
+    </ol>
+    <h4>Disadvantages</h4>
+    <ol type="i">
+      <li>Takes more time than individual decision making</li>
+      <li>One dominant individual may control the outcome</li>
+      <li>Social pressure may prevent honest contributions</li>
+      <li>Groups often settle on the first acceptable solution rather than the best one</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 18. TIME MANAGEMENT -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="time">
+    <h2><span class="icon">⏰</span>18. Time Management</h2>
+
+    <div class="callout gold">
+      <strong>Key principle:</strong> Time is an entrepreneur's scarcest resource. It is shared equally by all, cannot be stored, and cannot be replaced once lost. "Unless time is managed, nothing else can be managed."
+    </div>
+
+    <h3>Common Time Wasters in Business</h3>
+    <ol type="i">
+      <li>Failure to delegate duties — trying to do everything yourself</li>
+      <li>Poor mail management — urgent matters going to the wrong person</li>
+      <li>Unnecessary interruptions by friends or relatives</li>
+      <li>Poorly conducted meetings — much talking, little result</li>
+      <li>Poor scheduling — postponing activities that need immediate attention</li>
+      <li>Excessive paperwork</li>
+      <li>Indecisiveness — inability to commit to decisions</li>
+    </ol>
+
+    <h3>How to Manage Your Time Effectively</h3>
+    <ol type="1">
+      <li>Draw up a "things to do" action plan at the start of each day</li>
+      <li>Set priorities based on what is urgent and important</li>
+      <li>Schedule your time realistically — do not overcommit</li>
+      <li>Delegate as much as possible and monitor progress</li>
+      <li>Tackle the most important tasks early in the day</li>
+      <li>Allow your workers to operate within their defined limits</li>
+      <li>Control interruptions — set specific times for open-door availability</li>
+      <li>Allow time to think about tomorrow's agenda</li>
+      <li>Maintain clear, organized workspaces — keep your desk in-tray clear</li>
+      <li>Invest in competent, skilled personnel to reduce the burden on yourself</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 19. CHANGE -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="change">
+    <h2><span class="icon">🔄</span>19. Managing Change</h2>
+
+    <div class="callout">
+      <strong>Key idea:</strong> "Change before Change changes you." Change is necessary for business survival, growth, and competitiveness — but it carries risk and uncertainty.
+    </div>
+
+    <h3>Reasons Businesses Need to Change</h3>
+    <ol type="i">
+      <li>To remain economically viable</li>
+      <li>To grow — increase sales, profits, employees, and market share</li>
+      <li>To enhance chances of long-term survival</li>
+      <li>Dissatisfaction with the status quo</li>
+      <li>The need to cut costs or improve efficiency</li>
+      <li>Emergence of new demand in the market</li>
+      <li>Tough local and international competition</li>
+      <li>Advances in technology</li>
+    </ol>
+
+    <h3>Types of Change</h3>
+    <ol type="a">
+      <li><strong>Change of product</strong> — updating labeling, size, packaging, color, taste, quality, or smell</li>
+      <li><strong>Change of service</strong> — improving speed, quality, or method of service delivery</li>
+      <li><strong>Change of technology</strong> — adopting new tools, equipment, materials, or production methods</li>
+      <li><strong>Change of policy</strong> — revising objectives, goals, and strategies to comply with market or government changes</li>
+    </ol>
+
+    <h3>Why People Resist Change</h3>
+    <ol type="i">
+      <li>Fear of the unknown — uncertainty about what comes next</li>
+      <li>Misinformation or no information at all</li>
+      <li>Threat to existing status quo and routines</li>
+      <li>Threat to established power bases</li>
+      <li>Distrust of the people initiating the change</li>
+      <li>Fear of failure — social or economic</li>
+      <li>No perceived immediate benefits — people want quick, tangible gains</li>
+    </ol>
+
+    <h3>5 Steps to Managing Change Successfully</h3>
+    <ol type="1">
+      <li>Precisely define what operational changes are needed</li>
+      <li>Identify how the new methods will affect particular people and groups</li>
+      <li>Assess existing attitudes and how they support current practice</li>
+      <li>Define what new attitudes and perspectives are needed for the change to succeed</li>
+      <li>Implement measures designed to shift existing attitudes toward the desired direction</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 20. COMPETITION -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="competition">
+    <h2><span class="icon">⚔️</span>20. Coping with Competition</h2>
+
+    <p>Competition is the act of vying for customers or market share. Understanding your competitive environment is essential for survival.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h5>Direct Competitors</h5>
+        <p>Businesses offering products or services <em>similar</em> to yours targeting the same customers (e.g., two pharmacies on the same street).</p>
+      </div>
+      <div class="card">
+        <h5>Indirect Competitors</h5>
+        <p>Businesses offering <em>different</em> goods or services but competing for the same customer's spending (e.g., a cinema vs. a restaurant — both compete for leisure spending).</p>
+      </div>
+    </div>
+
+    <h3>Steps to Analyze Competition</h3>
+    <ol type="1">
+      <li><strong>Identify</strong> — List names, locations, and activities of all competitors</li>
+      <li><strong>Analyze the market</strong> — What is their market share? Who do they serve? What advantages do they have?</li>
+      <li><strong>Analyze the product</strong> — How does their quality compare? Do they offer special services?</li>
+      <li><strong>Analyze production</strong> — What technology, raw materials, and skills do they use?</li>
+      <li><strong>Analyze finances</strong> — How do their financial resources compare to yours?</li>
+      <li><strong>Analyze government policy</strong> — Are there opportunities or threats from regulations?</li>
+      <li><strong>Analyze the environment</strong> — Does the social environment offer you any competitive advantage?</li>
+      <li><strong>Compile a SWOT table</strong> — Summarize all findings into actionable insights</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 21. MARKETING -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="marketing">
+    <h2><span class="icon">📣</span>21. Marketing and the 4Ps</h2>
+
+    <div class="callout">
+      <strong>Marketing</strong> is the process of conceiving an exchange and accomplishing the tasks necessary to deliver goods or services in a way that satisfies the customer and meets business objectives.
+    </div>
+
+    <h3>The 4Ps of the Marketing Mix</h3>
+    <p>The marketing mix is the combination of four key elements — all must work together to achieve marketing objectives.</p>
+
+    <ol type="1">
+      <li>
+        <strong>Product</strong> — involves planning, designing, and developing the right product or service.
+        <ul>
+          <li>Key decisions: product size, quality, design, range, volume, packaging, brand name, warranties, and after-sale service</li>
+          <li>Goal: establish a product policy and strategy that meets customer satisfaction</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Price</strong> — the value charged by the supplier to the buyer.
+        <ul>
+          <li>Directly relates to revenue generation</li>
+          <li>Signals product quality — high prices signal superiority</li>
+          <li>Must balance customer expectations with profit goals</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Placement (Distribution)</strong> — concerned with linking seller to buyer.
+        <ul>
+          <li>Involves: channels of distribution, transport means, warehousing, and routing</li>
+          <li>Goal: ensure the product is available at the right place and right time</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Promotion</strong> — informing and persuading customers to buy.
+        <ul>
+          <li>Five main methods: advertising, personal selling, sales promotion, publicity, and public relations</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>Methods of Product Promotion</h3>
+    <ol type="a">
+      <li><strong>Advertising</strong> — Paid, public presentation of a product through media (TV, radio, newspapers, posters, billboards). An advertisement must have: a media presentation, payment, and an identifiable sponsor.</li>
+      <li><strong>Personal Selling</strong> — Direct, face-to-face communication between a salesperson and a customer. Most expensive but most effective for complex products.</li>
+      <li><strong>Sales Promotion</strong> — Short-term incentives to boost sales:
+        <ul>
+          <li>Gifts and premiums</li>
+          <li>Discounts</li>
+          <li>In-store displays</li>
+          <li>Credit facilities</li>
+          <li>Loss leaders (selling one item cheaply to attract customers)</li>
+          <li>Free samples</li>
+          <li>After-sale services</li>
+        </ul>
+      </li>
+      <li><strong>Publicity</strong> — Unpaid coverage in media (a news story, press feature). The business does not pay for this; it is earned through newsworthiness.</li>
+      <li><strong>Public Relations (PR)</strong> — Managing the organization's image with specific consumer groups or the general public. Can correct misinformation or rebuild a damaged reputation.</li>
+    </ol>
+
+    <h3>Factors Influencing Choice of Promotional Method</h3>
+    <ol type="i">
+      <li>Cost — must fit the business's financial capacity</li>
+      <li>Target audience — different audiences require different approaches</li>
+      <li>Nature of the product — complex products may need demonstrations</li>
+      <li>Urgency of the message — urgent launches need fast media like TV and radio</li>
+      <li>Competitor strategies — match or counter what competitors are doing</li>
+      <li>Level of demand — high-demand products need fewer promotional efforts</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 22. ORG FORMS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="org">
+    <h2><span class="icon">🏢</span>22. Organizational Forms</h2>
+
+    <h3>A. Sole Proprietorship</h3>
+    <p>A business owned and operated by <strong>one person</strong> who bears all risks and enjoys all profits.</p>
+    <ol type="i">
+      <li><strong>Formation:</strong> Simple — only a government license required; register business name if different from owner's name</li>
+      <li><strong>Liability:</strong> <em>Unlimited</em> — the owner is personally responsible for all debts, including personal property</li>
+      <li><strong>Capital:</strong> From personal savings, borrowing (family, banks, KIE, ICDC), credit suppliers, or NGO funding</li>
+    </ol>
+    <h4>Advantages</h4>
+    <ol type="a">
+      <li>Easy and cheap to start</li>
+      <li>Quick decision making — no consultations needed</li>
+      <li>Complete freedom of action</li>
+      <li>All profits go to the owner</li>
+      <li>Full control over business secrets</li>
+    </ol>
+    <h4>Disadvantages</h4>
+    <ol type="a">
+      <li>Unlimited liability — personal property at risk</li>
+      <li>Limited capital for expansion</li>
+      <li>Business ceases upon owner's death (limited life)</li>
+      <li>Owner shoulders all losses</li>
+      <li>Fatigue from long working hours</li>
+    </ol>
+
+    <h3>B. Partnership</h3>
+    <p>A relationship between <strong>2–20 persons</strong> carrying on a business together with a view to making profit. Governed by the Partnership Act.</p>
+    <h4>Types of Partners</h4>
+    <ol type="i">
+      <li><strong>General Partner</strong> — Actively involved; fully liable for partnership debts</li>
+      <li><strong>Limited Partner</strong> — Liability limited to capital contributed; cannot participate in management</li>
+      <li><strong>Active Partner</strong> — Involved in day-to-day operations; may earn a salary</li>
+      <li><strong>Dormant/Sleeping Partner</strong> — Contributes capital but does not manage; still liable for debts</li>
+      <li><strong>Nominal Partner</strong> — Lends their name to the business but contributes no capital</li>
+      <li><strong>Minor Partner</strong> — Under 18 years; shares profits only (not losses); limited liability</li>
+    </ol>
+    <h4>Partnership Deed Contents</h4>
+    <ol type="a">
+      <li>Nature of the business</li>
+      <li>Capital contributions of each partner</li>
+      <li>Profit and loss sharing ratios</li>
+      <li>Interest on capital and drawings</li>
+      <li>Powers of each partner</li>
+      <li>Procedures for resolution and dissolution</li>
+      <li>Valuation of goodwill on admission or retirement</li>
+    </ol>
+
+    <h3>C. Companies (Incorporated Businesses)</h3>
+    <p>Companies are legally separate from their owners — they can own property, sue, be sued, hire, and fire in their own name.</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Feature</th><th>Public Limited Company</th><th>Private Limited Company</th></tr>
+        <tr><td>Minimum members</td><td>7</td><td>2</td></tr>
+        <tr><td>Maximum members</td><td>Unlimited</td><td>50 (excluding employees)</td></tr>
+        <tr><td>Share invitation</td><td>Can invite public to buy shares</td><td>Cannot publicly advertise shares</td></tr>
+        <tr><td>Share transferability</td><td>Freely transferable (stock exchange)</td><td>Requires consent of other shareholders</td></tr>
+        <tr><td>Directors minimum</td><td>3</td><td>1</td></tr>
+        <tr><td>Start operations</td><td>After Certificate of Commencement</td><td>After Certificate of Incorporation</td></tr>
+      </table>
+    </div>
+
+    <h4>Key Documents for Company Formation</h4>
+    <ol type="i">
+      <li><strong>Memorandum of Association</strong> — defines the company's relationship with the outside world (name clause, object clause, situation clause, liability clause, capital clause)</li>
+      <li><strong>Articles of Association</strong> — internal rules governing shareholders and directors (voting rights, meetings, accounts, directors' duties)</li>
+    </ol>
+
+    <h3>D. Co-operative Societies</h3>
+    <p>A voluntary association of at least <strong>10 persons</strong> who pool resources to achieve shared economic goals.</p>
+    <h4>Principles of Co-operatives</h4>
+    <ol type="i">
+      <li>Open and voluntary membership</li>
+      <li>Democratic administration — one person, one vote</li>
+      <li>Service to members as the primary purpose</li>
+      <li>Profit distributed based on level of activity (not share size)</li>
+      <li>Limited interest on capital</li>
+      <li>Co-operation with other co-operative societies</li>
+      <li>Education for members</li>
+    </ol>
+    <h4>Types of Co-operatives</h4>
+    <ol type="a">
+      <li><strong>Producer Co-operatives</strong> — collect, process, and market members' agricultural produce</li>
+      <li><strong>Consumer Co-operatives</strong> — buy goods in bulk and sell to members at lower prices</li>
+      <li><strong>SACCOs (Savings and Credit Co-operative Societies)</strong> — members save collectively and get loans at low interest rates (typically 1% per month)</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 23. FINANCE -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="finance">
+    <h2><span class="icon">💰</span>23. Sources of Business Finance</h2>
+
+    <h3>Two Main Categories</h3>
+    <div class="card-grid">
+      <div class="card">
+        <h5>Equity Finance</h5>
+        <p>Ownership-based finance. No collateral needed. Includes ordinary share capital, retained earnings, and preference shares. The investor receives a share in the business.</p>
+      </div>
+      <div class="card">
+        <h5>Debt Finance</h5>
+        <p>Borrowed funds. Must be repaid with interest. Includes loans, debentures, bank overdrafts, trade credit, and hire purchase. Collateral may be required.</p>
+      </div>
+    </div>
+
+    <h3>A. Equity Finance — Key Sources</h3>
+    <ol type="i">
+      <li>
+        <strong>Ordinary Share Capital</strong> — Raised by selling shares. Permanent finance. Earns variable dividends. Carries voting rights. Highest risk but potentially highest return. Paid last in liquidation.
+      </li>
+      <li>
+        <strong>Retained Earnings (Revenue Reserves)</strong> — Undistributed profits kept in the business. Cost-free, flexible, and quickly available. The largest internal source of finance. Can be misused if not monitored.
+      </li>
+      <li>
+        <strong>Preference Share Capital (Quasi-Equity)</strong> — Fixed dividend rate. Paid before ordinary shareholders. Does not carry voting rights. More secure than ordinary shares but less flexible than debt.
+      </li>
+    </ol>
+
+    <h3>B. Debt Finance — Key Sources</h3>
+    <ol type="i">
+      <li><strong>Bank Loans</strong> (Short, Medium, Long-term) — Available in varying durations. Interest is a legal obligation. Short-term: 1 month–4 years. Medium: 4–7 years. Long-term: 7+ years.</li>
+      <li><strong>Bank Overdraft</strong> — Short-term facility; not secured; flexible; useful for emergencies. More expensive than loans (1–2% higher interest). Can be recalled at any time.</li>
+      <li><strong>Debentures</strong> — Long-term debt instruments that confirm the company owes a sum of money. Can be secured or unsecured; redeemable or irredeemable; convertible or non-convertible. Interest is tax-allowable.</li>
+      <li><strong>Trade Credit</strong> — Buying goods on credit and paying later. The most popular source for small businesses in Kenya. No explicit costs except discounts foregone.</li>
+      <li><strong>Hire Purchase</strong> — Acquire an asset by paying 40% upfront then instalments over time. Does not require collateral (guarantors instead). More expensive than bank loans. Available for plant, machinery, vehicles, and equipment.</li>
+      <li><strong>Factoring</strong> — Selling your trade debtors to a factor (financial institution) who pays 80% upfront and collects from debtors. Not popular in Kenya — expensive and most transactions are cash-based.</li>
+      <li><strong>Leasing</strong> — Renting an asset for a period instead of buying it. Avoids obsolescence risk. Lease charges are tax-allowable. The asset never belongs to the lessee.</li>
+      <li><strong>Bills of Exchange</strong> — A written, unconditional order to pay a specific sum on a future date. Can be discounted or used as loan security. Mature in 90–120 days.</li>
+    </ol>
+
+    <h3>Factors Affecting the Type of Finance Chosen</h3>
+    <ol type="a">
+      <li>Purpose of finance — working capital needs vs. fixed asset acquisition</li>
+      <li>Cost of finance — explicit (interest, dividends) vs. implicit (insurance, maintenance, flotation) costs</li>
+      <li>Company's gearing level — highly geared companies cannot easily borrow more</li>
+      <li>Size of the company — small companies face more hurdles accessing finance</li>
+      <li>General economic conditions — in recessions, debt finance is riskier</li>
+      <li>Repayment pattern — the repayment schedule must match the asset's productive life</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 24. BUSINESS PLAN -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="business-plan">
+    <h2><span class="icon">📋</span>24. Business Plan Development</h2>
+
+    <div class="callout">
+      <strong>Definition:</strong> A business plan is a document that convincingly demonstrates that a business idea can sell enough products or services to make a satisfactory profit — and is attractive to potential financiers. It is a <em>road map</em> for starting and managing a successful business.
+    </div>
+
+    <h3>Why Write a Business Plan?</h3>
+    <ol type="i">
+      <li>Avoids silly, costly mistakes that could sink the business</li>
+      <li>Defines and focuses business objectives and goals</li>
+      <li>Acts as a fundraising, marketing, monitoring, and staffing tool</li>
+      <li>Forces realistic assessment of intentions and resources</li>
+      <li>Clearly communicates your vision to partners, investors, and lenders</li>
+    </ol>
+
+    <h3>Components of a Business Plan</h3>
+    <ol type="1">
+      <li>
+        <strong>Executive Summary</strong> (written LAST, read FIRST)
+        <ul>
+          <li>Type of venture, product/service offered, and what makes it unique</li>
+          <li>Business status, legal form, location, and target market</li>
+          <li>Market share percentage, competitor strengths/weaknesses</li>
+          <li>Strategy for entering the market</li>
+          <li>Management team qualifications</li>
+          <li>Funding needed and type of financing sought</li>
+          <li>Strengths that will drive success</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Business Description</strong>
+        <ul>
+          <li>Mission statement, vision, and SMART objectives</li>
+          <li>Type and legal form of business venture</li>
+          <li>Date of commencement, physical and postal address</li>
+          <li>Brief history and owner experience</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Marketing Plan</strong>
+        <ul>
+          <li>Description of target market (customer segment)</li>
+          <li>Product/service descriptions and pricing</li>
+          <li>Distribution and promotion strategies</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Competitor Analysis</strong>
+        <ul>
+          <li>Internal analysis — strengths and weaknesses</li>
+          <li>External analysis — opportunities and threats</li>
+          <li>Environmental scan — political, social, economic, regulatory factors</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Management and Organization Plan</strong>
+        <ul>
+          <li>Key staff, their positions, qualifications, and experience</li>
+          <li>HR practices: recruitment, motivation, training, appraisal</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Business Operations Plan</strong>
+        <ul>
+          <li>Description of premises, products/services offered</li>
+          <li>Machinery, tools, and equipment needed</li>
+          <li>Legal requirements: business name, tax compliance, labor laws</li>
+          <li>Monthly overhead expenses</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Financial Plan</strong>
+        <ul>
+          <li>Pre-operational costs (before start-up)</li>
+          <li>Working capital requirements</li>
+          <li>Projected monthly and annual cash flow statements</li>
+          <li>Projected income statement (pro forma)</li>
+          <li>Projected balance sheet</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Appendices</strong>
+        <ul>
+          <li>Brochures, maps, photos, lease copies, certificates of registration</li>
+          <li>Collateral asset lists, licenses, market research results</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>What Lenders Look For (The 4Cs of Credit)</h3>
+    <ol type="i">
+      <li><strong>Cash flow</strong> — Can the business generate enough revenue to repay the loan?</li>
+      <li><strong>Collateral</strong> — What assets can be used as security?</li>
+      <li><strong>Character</strong> — Does the entrepreneur have a good credit history and reputation?</li>
+      <li><strong>Contribution of equity</strong> — How much has the entrepreneur personally invested?</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 25. ETHICS -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="ethics">
+    <h2><span class="icon">⚖️</span>25. Business Ethics</h2>
+
+    <div class="callout">
+      <strong>Definition:</strong> Business ethics is concerned with what is right and wrong in the practice of business. It addresses the principles governing business conduct, the product, consumers, and the entrepreneur's moral obligations.
+    </div>
+
+    <h3>Important Aspects of Business Ethics</h3>
+    <ol type="a">
+      <li><strong>Fair Competition</strong> — Do not reduce prices to drive competitors out of business; do not exploit consumer ignorance; do not collude with others to fix prices</li>
+      <li><strong>Fair Pricing</strong> — Charge prices that are fair to customers and sustainable for the business</li>
+      <li><strong>Customer/Supplier Relations</strong> — Treat customers and suppliers with honesty, courtesy, and fairness</li>
+      <li><strong>Quality of Goods and Services</strong> — Products must meet stated quality and quantity standards</li>
+      <li><strong>Employee Treatment</strong> — Reasonable working hours, pleasant conditions, non-discrimination, listening to complaints</li>
+      <li><strong>Product Promotion Ethics</strong> — No misrepresentation in advertising; packaging must match the actual product</li>
+    </ol>
+
+    <h3>Types of Ethics in Business</h3>
+    <ol type="i">
+      <li><strong>Organizational Ethics</strong> — Code of conduct that guides behavior within the organization; upheld through ethics committees and regular updates</li>
+      <li><strong>Individual Ethics</strong> — Personal values: honesty, avoiding criminal acts, willingness to perform. Shaped by religion, family, and the organization's own standards</li>
+      <li><strong>Social Ethics</strong> — Environmental awareness, fair competition, and good public relations</li>
+      <li><strong>Government Obligations</strong> — Paying taxes, filing annual returns (NHIF, NSSF), maintaining insurance</li>
+    </ol>
+
+    <h3>Four Philosophical Approaches to Ethics</h3>
+    <ol type="1">
+      <li><strong>Deontology</strong> — The act itself determines morality. If it is consistent with an accepted moral law (e.g., do not steal), it is right — regardless of consequences.</li>
+      <li><strong>Utilitarianism</strong> — An act is right if the net result benefits the majority. Focus on consequences — the greatest good for the greatest number.</li>
+      <li><strong>Teleology</strong> — Judges acts by the actor's purpose and motives. If the goal is good and the act achieves it lawfully, the act is right.</li>
+      <li><strong>Egoism</strong> — Personal or organizational benefit is the primary criterion for judging economic actions.</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 26. CSR -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="csr">
+    <h2><span class="icon">🤝</span>26. Corporate Social Responsibility (CSR)</h2>
+
+    <div class="callout">
+      <strong>Definition:</strong> CSR refers to the roles undertaken by a business organization toward the surrounding environment and community — the obligation to account for conduct that affects society at large.
+    </div>
+
+    <h3>Stakeholder Groups</h3>
+    <ol type="A">
+      <li><strong>Internal Stakeholders (Employees)</strong> — seek employment continuity, organizational growth, and personal esteem</li>
+      <li><strong>Connected Stakeholders</strong> — Shareholders (seek dividends and capital growth), banks (want loan repayment security), customers (want quality at fair prices), suppliers (want timely payment and ongoing contracts)</li>
+      <li><strong>External Stakeholders</strong> — Government (wants tax revenue, employment, legal compliance), local authorities (want economic activity and local tax), competitors (want fair competition)</li>
+    </ol>
+
+    <h3>Social Concerns of Entrepreneurs</h3>
+    <ol type="i">
+      <li><strong>Environmental protection</strong> — Minimizing pollution; adopting preventive measures; using raw materials economically</li>
+      <li><strong>Community participation</strong> — Supporting welfare programs for the aged, education, recreational, cultural, health, and housing facilities</li>
+      <li><strong>Gender issues</strong> — Employing both men and women; promoting based on merit; funding gender programs and combating GBV and FGM</li>
+      <li><strong>Quality goods and services</strong> — Conducting product research; responding to consumer complaints; educating consumers; avoiding misleading advertising</li>
+    </ol>
+
+    <h3>Importance of CSR</h3>
+    <ol type="i">
+      <li>Enhances business relations with the community — creates social acceptance</li>
+      <li>Recognizes and appreciates the society that sustains the business</li>
+      <li>Supplements government development efforts</li>
+      <li>Contributes to waste management and environmental sustainability</li>
+    </ol>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 27. TECHNOLOGY -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="technology">
+    <h2><span class="icon">💻</span>27. Technology and E-Business</h2>
+
+    <h3>What is E-Business?</h3>
+    <p>E-Business is the use of the internet and information technology to support electronic commerce, enterprise communication, and collaboration — web-enabled business processes both within a company and with its customers and partners.</p>
+
+    <h3>Benefits of E-Business</h3>
+    <ol type="i">
+      <li>Consumers have a wider choice on the cyber market</li>
+      <li>Consumers can compare products, features, and prices before buying</li>
+      <li>Goods are delivered directly to customers' doors</li>
+      <li>Branded goods often cost less online</li>
+      <li>Minimizes inventory costs through just-in-time systems</li>
+      <li>Improves customer service</li>
+      <li>Reduces distribution costs</li>
+      <li>Helps businesses go global by making product information available worldwide</li>
+    </ol>
+
+    <h3>Opportunities E-Business Offers Small Enterprises</h3>
+    <ol type="i">
+      <li>Access new markets beyond local boundaries</li>
+      <li>Improve product customization for specific customer needs</li>
+      <li>Lower various operational costs</li>
+      <li>Sell products globally without a physical store</li>
+    </ol>
+
+    <h3>E-Government</h3>
+    <p>The application of advanced ICT to deliver government services more conveniently, efficiently, and cost-effectively to citizens. Key features:</p>
+    <ol type="i">
+      <li><strong>Smart</strong> — selectively uses technology to add value</li>
+      <li><strong>Customer-driven</strong> — organized around citizens' needs and convenience</li>
+      <li><strong>Responsive and transparent</strong> — accountable to citizens using ICT</li>
+      <li><strong>24/7 availability</strong> — not limited by office hours</li>
+      <li><strong>Accessible from anywhere</strong> — ICT-enabled delivery</li>
+    </ol>
+
+    <h3>E-Procurement</h3>
+    <p>The combined use of ICT for external and internal purchasing and supply management. In simple terms: business-to-business purchase and sale of goods and services over the internet. Enabled by <strong>XML</strong> (Extensible Markup Language) standards that allow systems to communicate across organizational boundaries.</p>
+  </section>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- 28. GLOBALIZATION -->
+  <!-- ══════════════════════════════════════════════ -->
+  <section class="topic-section" id="globalization">
+    <h2><span class="icon">🌐</span>28. Globalization and Current Trends</h2>
+
+    <div class="callout">
+      <strong>Globalization</strong> is an international phenomenon eliminating political barriers to business, with electronic media and communication reducing distances and placing the customer at the center of business.
+    </div>
+
+    <h3>Why Businesses Go Global</h3>
+    <ol type="i">
+      <li>Access to large markets beyond national boundaries</li>
+      <li>Availability of cheaper inputs — raw materials, labor, and infrastructure</li>
+      <li>Greater revenue and operating margins</li>
+      <li>Ability to purchase sophisticated equipment using larger funds</li>
+      <li>Taking advantage of economies of scale</li>
+    </ol>
+
+    <h3>Factors Restraining Entrepreneurs from Going Global</h3>
+    <ol type="i">
+      <li><strong>Government controls and barriers</strong> — high taxation, quantitative restrictions, foreign exchange controls, complex documentation, and legal insecurity in foreign countries</li>
+      <li><strong>Entrepreneurial culture</strong> — narrow vision that cannot see beyond local markets</li>
+    </ol>
+
+    <h3>Consumer Behavior Trends</h3>
+    <p>Understanding what drives consumer decisions is essential for any entrepreneur. Factors influencing consumer behavior:</p>
+    <h4>Internal Factors</h4>
+    <ol type="i">
+      <li><strong>Needs and Motives</strong> — An unmet need becomes a motive that drives purchase decisions</li>
+      <li><strong>Perception</strong> — How a consumer views your product determines how they react to it</li>
+      <li><strong>Attitudes</strong> — A favorable attitude increases usage; entrepreneurs aim to build positive associations</li>
+      <li><strong>Personality</strong> — Stable personal traits influence buying style and preferences</li>
+    </ol>
+    <h4>External Factors</h4>
+    <ol type="i">
+      <li><strong>Culture</strong> — Learned behaviors and values unique to a society; entrepreneurs must respect and understand these before marketing</li>
+      <li><strong>Social Class</strong> — Certain products appeal more strongly to certain income and status groups</li>
+      <li><strong>Family</strong> — Family members play specific roles in purchase decisions</li>
+      <li><strong>Purchasing Power</strong> — Income and price levels determine what people can and will buy</li>
+    </ol>
+
+    <h3>Challenges Facing Entrepreneurs Today</h3>
+    <ol type="i">
+      <li>Adapting to rapidly changing business environments</li>
+      <li>Attracting capital — small businesses are often overlooked by lenders</li>
+      <li>Sustaining and maintaining the business long-term</li>
+      <li>Managing human resources effectively</li>
+      <li>Developing and executing effective marketing strategies</li>
+      <li>Building an entrepreneurial culture in resistance-prone societies</li>
+    </ol>
+
+    <h3>Managing These Challenges</h3>
+    <ol type="1">
+      <li>Rigorously evaluate business ideas before committing resources</li>
+      <li>Avoid excessive optimism — prepare realistic cash projections and marketing plans</li>
+      <li>Develop a strong business plan to attract lenders and investors</li>
+      <li>Invest in employee development, motivation, and retention systems</li>
+      <li>Stay updated on technology and adapt products and processes accordingly</li>
+      <li>Study consumer behavior before choosing marketing strategies</li>
+    </ol>
+  </section>
+
+</main>
+
+<!-- SCROLL TO TOP -->
+<button id="scroll-top" onclick="scrollToTop()">↑</button>
+
+<script>
+  // ── PROGRESS BAR ──
+  const progress = document.getElementById('progress');
+  const main = document.getElementById('main');
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    const pct = (scrolled / total) * 100;
+    progress.style.width = pct + '%';
+
+    const btn = document.getElementById('scroll-top');
+    if (scrolled > 300) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+
+    // active nav
+    const sections = document.querySelectorAll('.topic-section');
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 60) current = s.id;
+    });
+    document.querySelectorAll('#nav-list a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── SEARCH NAV ──
+  function filterNav(val) {
+    const q = val.toLowerCase();
+    document.querySelectorAll('#nav-list li').forEach(li => {
+      if (li.classList.contains('section-label')) {
+        li.style.display = '';
+        return;
+      }
+      const text = li.textContent.toLowerCase();
+      li.style.display = (q === '' || text.includes(q)) ? '' : 'none';
+    });
+  }
+
+  // ── MOBILE SIDEBAR ──
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // Close sidebar when nav link clicked on mobile
+  document.querySelectorAll('#nav-list a').forEach(a => {
+    a.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('open');
+      }
+    });
+  });
+</script>
+</body>
+</html>
